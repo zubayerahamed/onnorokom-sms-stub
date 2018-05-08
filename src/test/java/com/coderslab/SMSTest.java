@@ -27,16 +27,29 @@ public class SMSTest {
 	private static final String USERNAME = "01515634889";
 	private static final String PASSWORD = "142536142536Z%a";
 	private static final String MOBILE_NUMBER = "01748562164";
-	private static final String SMS_TEXT = "Hi. This is my first message using Onnorokom Bulk SMS Service API";
+	private static final String SMS_TEXT = "Hi. How r u?";
 	private static final String MASK_NAME = "";
 	private static final String CAMPAING_NAME = "";
 	private static final String SMS_TYPE = "TEXT";
 	private List<String> numbersList;
 
+	@Test
+	public void sliceReturnValueResponse() {
+		String returnedValue = "01748562164||500||3001";
+		//System.out.println(returnedValue.lastIndexOf("\\|\\|"));
+		System.out.println(returnedValue.substring(returnedValue.lastIndexOf("\\|\\|"), returnedValue.length()-1));
+		
+		String val[] = returnedValue.split("\\|\\|");
+		for(String s : val) {
+			System.out.println(s);
+		}
+	}
+
 	@Before
 	public void initNumbersList() {
 		numbersList = new ArrayList<>();
-		numbersList.add("01758444444");
+		numbersList.add("01919408812");
+		numbersList.add("01521107685");
 	}
 
 	@Test
@@ -67,7 +80,7 @@ public class SMSTest {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		//1900||01919408812||79810050/1900||01521107685||79810051/
 		System.out.println(returnValue);
 	}
 

@@ -26,7 +26,7 @@ public class SendSms extends Service {
 		URL url = null;
 		WebServiceException e = null;
 		try {
-			url = new URL("file:/C:/Users/cyclingbd007/Desktop/OnnorokomWSDL.wsdl");
+			url = new URL("https://api2.onnorokomsms.com/sendsms.asmx?WSDL");
 		} catch (MalformedURLException ex) {
 			e = new WebServiceException(ex);
 		}
