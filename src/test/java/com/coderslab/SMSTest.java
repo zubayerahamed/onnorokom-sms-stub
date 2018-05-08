@@ -6,11 +6,10 @@ package com.coderslab;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import com.onnorokomsms.api.SendSms;
 import com.onnorokomsms.api.SendSmsSoap;
@@ -19,9 +18,9 @@ import com.onnorokomsms.api.SendSmsSoap;
  * @author Zubayer Ahamed
  *
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest
 public class SMSTest {
+
+	private static final Logger logger = Logger.getLogger(SMSTest.class);
 
 	private static final String API_KEY = "92134";
 	private static final String USERNAME = "01515634889";
@@ -36,11 +35,11 @@ public class SMSTest {
 	@Test
 	public void sliceReturnValueResponse() {
 		String returnedValue = "01748562164||500||3001";
-		//System.out.println(returnedValue.lastIndexOf("\\|\\|"));
-		System.out.println(returnedValue.substring(returnedValue.lastIndexOf("\\|\\|"), returnedValue.length()-1));
-		
+		// System.out.println(returnedValue.lastIndexOf("\\|\\|"));
+		System.out.println(returnedValue.substring(returnedValue.lastIndexOf("\\|\\|"), returnedValue.length() - 1));
+
 		String val[] = returnedValue.split("\\|\\|");
-		for(String s : val) {
+		for (String s : val) {
 			System.out.println(s);
 		}
 	}
@@ -52,8 +51,17 @@ public class SMSTest {
 		numbersList.add("01521107685");
 	}
 
+	// This method only to see header
+	@BeforeClass
+	public static void beforeClass() throws Exception {
+		System.setProperty("com.sun.xml.internal.ws.transport.http.client.HttpTransportPipe.dump", "true");
+		System.setProperty("com.sun.xml.internal.ws.transport.http.HttpAdapter.dumpTreshold", "999999");
+		System.setProperty("com.sun.xml.internal.ws.transport.http.HttpAdapter.dump", "true");
+		System.setProperty("com.sun.xml.ws.transport.http.HttpAdapter.dumpTreshold", "999999");
+	}
+
 	@Test
-	public void sendSMSOneToOne() {
+	public void testSendSMSOneToOne() {
 		SendSms sms = new SendSms();
 		SendSmsSoap port = sms.getSendSmsSoap();
 		String returnValue = null;
@@ -65,11 +73,11 @@ public class SMSTest {
 			e.printStackTrace();
 		}
 
-		System.out.println(returnValue);
+		logger.info(returnValue);
 	}
 
 	@Test
-	public void sendSMSOneToMany() {
+	public void testSendSMSOneToMany() {
 		SendSms sms = new SendSms();
 		SendSmsSoap port = sms.getSendSmsSoap();
 		String returnValue = null;
@@ -80,12 +88,12 @@ public class SMSTest {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		//1900||01919408812||79810050/1900||01521107685||79810051/
-		System.out.println(returnValue);
+		// 1900||01919408812||79810050/1900||01521107685||79810051/
+		logger.info(returnValue);
 	}
 
 	@Test
-	public void sendNumberSMS() {
+	public void testSendNumberSMS() {
 		SendSms sms = new SendSms();
 		SendSmsSoap port = sms.getSendSmsSoap();
 		String returnValue = null;
@@ -95,12 +103,11 @@ public class SMSTest {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		System.out.println(returnValue);
+		logger.info(returnValue);
 	}
 
 	@Test
-	public void checkBalance() {
+	public void testCheckBalance() {
 		SendSms sms = new SendSms();
 		SendSmsSoap port = sms.getSendSmsSoap();
 		String returnValue = null;
@@ -109,6 +116,19 @@ public class SMSTest {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println(returnValue);
+		logger.info(returnValue);
+	}
+
+	@Test
+	public void testDeliveryStatus() {
+		SendSms sms = new SendSms();
+		SendSmsSoap port = sms.getSendSmsSoap();
+		String returnValue = null;
+		try {
+			returnValue = port.deliveryStatus(USERNAME, PASSWORD, "79810051");
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		logger.info(returnValue);
 	}
 }
