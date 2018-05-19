@@ -22,11 +22,11 @@ public class SMSTest {
 
 	private static final Logger logger = Logger.getLogger(SMSTest.class);
 
-	private static final String API_KEY = "92134";
-	private static final String USERNAME = "01515634889";
-	private static final String PASSWORD = "142536142536Z%a";
-	private static final String MOBILE_NUMBER = "01748562164";
-	private static final String SMS_TEXT = "Hi. How r u?";
+	private static final String API_KEY = "";
+	private static final String USERNAME = "";
+	private static final String PASSWORD = "";
+	private static final String MOBILE_NUMBER = "";
+	private static final String SMS_TEXT = "";
 	private static final String MASK_NAME = "";
 	private static final String CAMPAING_NAME = "";
 	private static final String SMS_TYPE = "TEXT";
